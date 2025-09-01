@@ -1,0 +1,9 @@
+{
+  "solc_remaps": [
+    "openzeppelin-contracts=lib/openzeppelin-contracts"
+  ],
+  "checklist": true,
+  "exclude": [
+    "low"
+  ]
+}

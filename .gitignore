@@ -1,0 +1,69 @@
+
+# --- General
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+*.tmp
+*.swp
+
+# --- Node / JS
+node_modules/
+npm-debug.log*
+yarn.lock
+
+# --- Python
+__pycache__/
+.venv/
+venv/
+
+# --- Foundry / Hardhat / Solidity
+out/
+cache/
+artifacts/
+broadcast/
+coverage/
+gas-snapshot
+coverage.json
+
+# OpenZeppelin local network deployments
+.openzeppelin/
+
+# --- Secrets & env
+.env
+.env.*
+*.secret
+*.secrets
+*.key
+*.pem
+*.p12
+*.keystore
+*.mnemonic
+*.password
+*.pass
+*.private
+*.enc
+
+# Wallet backups, Safe exports, tx bundles (keep private)
+wallets/
+safe-exports/
+gnosis-safe/
+transaction-bundles/
+
+# --- Media & binaries (avoid in code repos)
+*.mp4
+*.mov
+*.wav
+*.zip
+*.gz
+*.rar
+*.7z
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+
+# --- Local docs you don't want public
+docs/private/
