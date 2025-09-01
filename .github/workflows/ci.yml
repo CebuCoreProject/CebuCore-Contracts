@@ -1,7 +1,9 @@
 name: CI
 on:
-  push: {branches: ["main"]}
-  pull_request: {branches: ["main"]}
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build-and-test:
@@ -9,31 +11,43 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: foundry-rs/foundry-toolchain@v1
-        with: {version: stable}
-      - run: forge fmt
-      - run: forge build
-      - run: forge test -vvv
+        with:
+          version: stable
+      - name: Format (auto-fix)
+        run: forge fmt
+      - name: Build
+        run: forge build
+      - name: Test
+        run: forge test -vvv
 
   solhint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: {node-version: '20'}
-      - run: npm i -D solhint
-      - run: npx solhint 'contracts/**/*.sol' || true  # warnings не валят билд
+        with:
+          node-version: "20"
+      - name: Install solhint
+        run: npm i -D solhint
+      - name: Lint Solidity (non-blocking)
+        run: npx solhint "contracts/**/*.sol" || true
 
   slither:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: '3.11'}
+        with:
+          python-version: "3.11"
       - name: Install Slither + solc
         run: |
           pip install slither-analyzer==0.10.4 solc-select==1.0.4
           solc-select install 0.8.26
           solc-select use 0.8.26
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+      - name: Verify Foundry
+        run: forge --version
       - name: Run Slither (non-blocking)
-  run: slither . || true
-
+        run: slither . || true
