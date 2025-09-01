@@ -1,20 +1,12 @@
-
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.26;
 
 /*
-  PLACEHOLDER FILE — REPLACE WITH THE ACTUAL CCR TOKEN CONTRACT BEFORE AUDIT.
-
-  IMPORTANT:
-  - Pin exact solc and optimizer settings in foundry.toml to match deployed bytecode.
-  - If token is already verified on BscScan, ensure this source matches that verified source.
+  Minimal placeholder for audit skeleton.
+  No external libs; real token code will replace this via PR.
 */
 
-import {ERC20} from "openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
-
-contract CCRTokenPlaceholder is ERC20 {
-    constructor() ERC20("CebuCore", "CCR") {
-        // Minting is intentionally omitted in placeholder.
-        // Replace with the real implementation.
-    }
+contract CCRTokenPlaceholder {
+    function name() external pure returns (string memory) { return "CebuCore"; }
+    function symbol() external pure returns (string memory) { return "CCR"; }
 }
