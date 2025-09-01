@@ -7,6 +7,11 @@ pragma solidity ^0.8.26;
 */
 
 contract CCRTokenPlaceholder {
-    function name() external pure returns (string memory) { return "CebuCore"; }
-    function symbol() external pure returns (string memory) { return "CCR"; }
+    function name() external pure returns (string memory) {
+        return "CebuCore";
+    }
+
+    function symbol() external pure returns (string memory) {
+        return "CCR";
+    }
 }
