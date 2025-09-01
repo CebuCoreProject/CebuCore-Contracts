@@ -2,6 +2,7 @@ name: CI
 on:
   push: {branches: ["main"]}
   pull_request: {branches: ["main"]}
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -9,10 +10,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: foundry-rs/foundry-toolchain@v1
         with: {version: nightly}
-      - run: forge install OpenZeppelin/openzeppelin-contracts@v5.0.2
+      - name: Install deps
+        run: |
+          forge install OpenZeppelin/openzeppelin-contracts@v5.0.2
+          forge install foundry-rs/forge-std@v1.9.5
       - run: forge fmt --check
       - run: forge build
       - run: forge test -vvv
+
   solhint:
     runs-on: ubuntu-latest
     steps:
@@ -21,11 +26,23 @@ jobs:
         with: {node-version: '20'}
       - run: npm i -D solhint
       - run: npx solhint 'contracts/**/*.sol'
+
   slither:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
-      - run: pip install slither-analyzer==0.10.4
-      - run: slither .
+      - name: Install Slither + solc
+        run: |
+          pip install slither-analyzer==0.10.4 solc-select==1.0.4
+          solc-select install 0.8.26
+          solc-select use 0.8.26
+      - uses: foundry-rs/foundry-toolchain@v1
+        with: {version: nightly}
+      - name: Install deps
+        run: |
+          forge install OpenZeppelin/openzeppelin-contracts@v5.0.2
+          forge install foundry-rs/forge-std@v1.9.5
+      - name: Run Slither
+        run: slither .
