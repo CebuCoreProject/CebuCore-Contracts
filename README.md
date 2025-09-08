@@ -7,24 +7,46 @@
 
 > ⚠️ **Security First.** This repo intentionally avoids any secrets, private keys, or production‑only operational files. Do **not** commit `.env`, mnemonic/keystore files, RPC keys, Safe export bundles, or cloud configs. See [`docs/SAFETY_GUARDRAILS.md`](docs/SAFETY_GUARDRAILS.md).
 
-## 1) What’s here
-- Contracts (placeholders): replace with the **actual** production sources before you tag a release or send to auditors.
-- Tests skeleton and CI to enforce build, style and static analysis (Slither, Solhint).
-- Documentation for auditors: invariants, threat model, addresses, verification steps, and audit checklist.
+## What’s here
+- **Contracts** (prod sources): replace any placeholders before tagging a release or sending to auditors.
+- **Tests & CI**: build + style + static analysis (Slither, Solhint).
+- **Auditor docs**: invariants, threat model, on-chain refs, verification steps, checklist.
 
-## 2) Public on‑chain references (as of 2025‑09‑01)
-- **CCR token:** `0x422f097BB0Fc9d2adEb619349dB8df6a2450bbc6`
-- **Treasury Safe (CCR):** `0xf55f608b4046E843625633FAA7371d6B3F3E50aB`
-- **Revenue Safe (BNB):** `0x03AaA55404fE9b2090696AFE6fe185C5B320EEDe`
-- **Timelock (48h):** `0x546D6fd8fA0945eDE494565158d9775f6492575E`
+## Public on-chain references (as of 2025-09-08)
+**Core**
+- CCR Token — `0x422f097BB0Fc9d2adEb619349dB8df6a2450bbc6`
 
-Presale (per plan):
-- Duration: 30 days
-- Min buy: 0.02 BNB
-- Max buy: 50 BNB
-- Initial rate: 85,000 CCR per 1 BNB
-- Vesting (Claim Distributor): 4×25% at TGE/+30/+60/+90 days
-- Tranches: Presale 500M, Airdrop 500M
+**Distribution / Vesting**
+- ClaimDistributor (Presale & Airdrop) — `0x696E0E6e55133fD205812dbD8e1DeDbaD266F127`
+- Vesting — Team/Advisors — `0xb829e2c0b8d08a025a915C163Da77Fa234B72e7b`
+- Vesting — Private — `0x8b27d9a5C33eAa16537335acd62819BF12F60413`
+- Vesting — Ecosystem (24m linear) — `0x29ca47A1ddfDbB2662a99634Bc5Aa3204f5185ac`
+- CEX & Market-Making Safe (Vesting 3+9) — `0xd66D8518d80D9D8dBED328E1E236196541135B17`
+
+**Safes / Treasury**
+- Treasury Safe (Vesting) — `0xf55f608b4046E843625633FAA7371d6B3F3E50aB`
+- Treasury Safe (Ops) — `0xA0060Fd1CC044514D4E2F7D9F4204fEc517d7aDE`
+- Revenue Safe (BNB) — `0x03AaA55404fE9b2090696AFE6fe185C5B320EEDe`
+
+**Governance**
+- Timelock (48h) — `0x546D6fd8fA0945eDE494565158d9775f6492575E`
+
+> Keep this section in sync with `verifier/` inputs and `constructor-args/` files.
+
+## Presale (per plan)
+- **Duration:** 30 days  
+- **Min buy:** 0.02 BNB  
+- **Max buy:** 50 BNB  
+- **Initial rate:** 85,000 CCR per 1 BNB  
+
+**Vesting (ClaimDistributor):**  
+- **New schedule:** **20% at TGE**, then **8 unlocks × 10% every 15 days** (total 100%).  
+- **Distributor contract:** `0x696E0E6e55133fD205812dbD8e1DeDbaD266F127`.
+
+**Tranches (via ClaimDistributor):**
+- Presale — **500,000,000 CCR**  
+- Airdrop — **500,000,000 CCR**
+
 
 > If these change, update [`docs/addresses.md`](docs/addresses.md) and commit.
 
@@ -67,6 +89,22 @@ slither .
 4. Tag a read‑only release (e.g., `audit-2025-09-01`).  
 5. Share the repo URL + tag with auditors.
 
-## 6) License & disclosures
+## 6) License & Disclosures
+
+### License
+This repository is licensed under the MIT License.  
+See [`LICENSE`](./LICENSE). Each Solidity file includes an SPDX header.
+
+### Disclosures
+- **No investment advice.** CCR is a utility token; it does not represent equity, profits, or governance rights.
+- **Jurisdictions.** Access may be restricted where token offerings are limited or sanctioned by law.
+- **Smart-contract risk.** Audits/KYC reduce but do not eliminate risk. On-chain interactions are irreversible; funds can be lost.
+- **Upgradability & controls.** Contracts include admin/timelock controls (48h timelock at `0x546D6f…575E`). Parameters may change only via authorized roles/timelock; see `AUDIT_SCOPE.md`.
+- **Presale vesting.** **20% at TGE, then 10% every 15 days ×8** via ClaimDistributor `0x696E0E…F127`. Tranches: Presale 500M, Airdrop 500M.
+- **Referral.** 5% in CCR for verified presale invites per program rules; no self-referrals or multi-account abuse.
+- **Airdrop.** Subject to eligibility/KYC/anti-abuse; distribution and dates may change; excluded jurisdictions apply.
+
+For security issues, please follow [`SECURITY.md`](./SECURITY.md) and do not open public issues for sensitive findings.
+
 - Default license: MIT (change if needed).  
 - See `DISCLAIMER.md` — this is **not** investment advice.
