@@ -108,3 +108,66 @@ For security issues, please follow [`SECURITY.md`](./SECURITY.md) and do not ope
 
 - Default license: MIT (change if needed).  
 - See `DISCLAIMER.md` — this is **not** investment advice.
+
+## 7) Architecture & invariants
+- **Token (CCR)** — deflationless ERC20; pausable; no hidden mint/burn beyond declared rules.
+- **ClaimDistributor** — Merkle-less allowlist with owner-set allocations; schedule: 20% TGE + 8×10% every 15 days.
+- **Vesting safes** — linear or stepped releases; funds move only to whitelisted sinks.
+- **Treasury/Revenue safes** — custody only; no arbitrary minting; outflows require owner/threshold policies.
+- **Invariants**
+  - Total CCR held by distributors + circulating ≤ max supply.
+  - No role can bypass timelock for sensitive ops.
+  - Pausing blocks transfers where specified, not mint/burn accounting.
+
+## 8) Roles & permissions
+| Role / Control                | Holder / Mechanism | Scope |
+|------------------------------|--------------------|------|
+| `DEFAULT_ADMIN_ROLE`         | **Timelock 48h** `0x546D6fd8fA0945eDE494565158d9775f6492575E` | Admin changes, critical params |
+| `PAUSER_ROLE`                | Core ops via timelock | Pause/unpause token if emergency |
+| Distributor Owner            | Timelock → Distributor | Set allocations, start TGE/schedule |
+| Vesting Admin                | Timelock → Vesting contracts | Configure schedules (where allowed) |
+| Safe Owners / Threshold      | Gnosis/Multisig or equivalent | Treasury/Revenue outflows |
+
+> Любое изменение прав/ключевых параметров проходит через timelock (48h).
+
+## 9) Upgradability & emergency
+- **Upgradeability:** no proxies unless explicitly stated in the contract path. On-chain code is immutable; only params via roles/timelock.
+- **Emergency:** `pause()` (where available), timelock-gated revocation/halts, safes stop outflows by policy.
+
+## 10) Verification artifacts (mapping)
+| Component | Address | Source path | Compiler JSON | Constructor args |
+|---|---|---|---|---|
+| CCR Token | `0x422f097BB0Fc9d2adEb619349dB8df6a2450bbc6` | `contracts/CebuCoreToken.sol` | `verifier/token-0x422f097B....json` | `constructor-args/0x422f097B....txt` |
+| ClaimDistributor (Presale/Airdrop) | `0x696E0E6e55133fD205812dbD8e1DeDbaD266F127` | `contracts/distributor/ClaimDistributor.sol` | `verifier/distributor-0x696E0E6e....json` | `constructor-args/0x696E0E6e....txt` |
+| Vesting — Team/Advisors | `0xb829e2c0b8d08a025a915C163Da77Fa234B72e7b` | `contracts/vesting/TeamAdvisorsVesting.sol` | `verifier/vesting-team-0xb829e2c0....json` | `constructor-args/0xb829e2c0....txt` |
+| Vesting — Private | `0x8b27d9a5C33eAa16537335acd62819BF12F60413` | `contracts/vesting/PrivateVesting.sol` | `verifier/vesting-private-0x8b27d9a5....json` | `constructor-args/0x8b27d9a5....txt` |
+| Vesting — Ecosystem (24m) | `0x29ca47A1ddfDbB2662a99634Bc5Aa3204f5185ac` | `contracts/vesting/EcosystemVesting.sol` | `verifier/vesting-eco-0x29ca47A1....json` | `constructor-args/0x29ca47A1....txt` |
+| CEX/MM Safe (3+9) | `0xd66D8518d80D9D8dBED328E1E236196541135B17` | `contracts/vesting/CexMmSafe.sol` | `verifier/cexmm-0xd66D8518....json` | `constructor-args/0xd66D8518....txt` |
+| Treasury Safe (Vesting) | `0xf55f608b4046E843625633FAA7371d6B3F3E50aB` | `contracts/vesting/TreasurySafeVesting.sol` | `verifier/treasury-0xf55f608b....json` | `constructor-args/0xf55f608b....txt` |
+| Treasury Safe (Ops) | `0xA0060Fd1CC044514D4E2F7D9F4204fEc517d7aDE` | `contracts/safes/TreasurySafe.sol` | `verifier/treasury-ops-0xA0060Fd1....json` | `constructor-args/0xA0060Fd1....txt` |
+| Revenue Safe (BNB) | `0x03AaA55404fE9b2090696AFE6fe185C5B320EEDe` | `contracts/safes/RevenueSafe.sol` | `verifier/revenue-0x03AaA554....json` | `constructor-args/0x03AaA554....txt` |
+
+> Подстрой пути `verifier/*.json`/`constructor-args/*.txt` под твои реальные имена файлов.
+
+## 11) Tests, coverage & CI
+```bash
+# Unit tests
+forge test -vvv
+
+# Gas snapshots (optional)
+forge snapshot
+
+# Coverage (если установлен forge-coverage)
+forge coverage --report lcov
+
+## 12) Contacts & Official links
+- Website: https://cebucore.com
+- Docs:   https://docs.cebucore.com
+- GitHub: https://github.com/CebuCoreProject
+
+- X (Twitter): https://x.com/CebuCore
+- Telegram — Announcements: https://t.me/CebuCoreNews
+- Telegram — Support:       https://t.me/CebuCoreSupport
+- Discord:  https://discord.gg/A2b45cGNMp
+
+- Email cebu.core.project@gmail.com
