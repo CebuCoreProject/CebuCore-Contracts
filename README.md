@@ -1,4 +1,9 @@
 # CebuCore (CCORE) — Smart Contracts (Audit-Ready Repo)
+## Public On-Chain References (BSC Mainnet)
+
+- **CCORE Token (BEP-20):** `0x7576AC3010f4d41b73a03220CDa0e5e040F64c8a`
+- **Treasury Safe (CCORE, main):** `0xA0060Fd1CC044514D4E2F7D9F4204fEc517d7aDE`
+- **Revenue Safe (BNB):** `0x03AaA55404fE9b2090696AFE6fe185C5B320EEDe`
 
 **Status:** public, audit-ready skeleton (no secrets).  
 **Network:** BNB Smart Chain (BSC) Mainnet.  
@@ -45,12 +50,17 @@
 - **Max buy:** 20 BNB  
 - **Initial rate:** 1000000 CCORE per 1 BNB  
 
+## Governance
+
+- **No timelock.**  
+- **Multisig-only** can execute privileged operations (admin/pauser/param updates).  
+- Emergency pause: scope & conditions documented in code and /docs.
+
 **Vesting (ClaimDistributor):**  
 - **Schedule:** **20% at TGE**, then **8 unlocks × 10% every 15 days** (total 100%).  
 - **Distributor (new):** **TBD** (address after deploy).  
 - **Tranches:** Presale — **500,000,000 CCORE**, Airdrop — **500,000,000 CCORE**.
 
----
 
 ## 4) Reproducible builds / verification
 - All contracts use **`pragma solidity 0.8.24`**; optimizer **enabled, runs=200**.
@@ -67,8 +77,74 @@
 5. Share the repo URL + tag with auditors.
 
 ---
+## Build & Verify
 
-## 6) Contacts & Official links
+Compiler/target (must match deployed bytecode):
+- `solc_version = 0.8.24`
+- `optimizer = true`, `optimizer_runs = 200`
+- `evm_version = shanghai` (BSC mainnet currently on Paris/Shanghai)
+
+### Build
+```bash
+forge clean && forge build --sizes
+
+---
+forge test -vvv
+
+forge verify-contract \
+  --verifier bscscan \
+  --chain-id 56 \
+  <DEPLOYED_ADDRESS> <FULLY_QUALIFIED_NAME> \
+  --compiler-version v0.8.24+commit.e11b9ed9 \
+  --num-of-optimizations 200 \
+  --evm-version shanghai \
+  --watch
+
+
+---
+
+## 5) “Quality checks (local)” (того раздела у тебя не было)
+
+```md
+## Quality checks (local)
+
+```bash
+# Build & tests
+forge clean && forge build --sizes
+forge test -vvv
+
+# Lint
+npx --yes solhint@4.x "contracts/**/*.sol"
+
+# Slither (system solc 0.8.24 is required)
+pip install --upgrade pip
+pip install solc-select slither-analyzer
+solc-select install 0.8.24 && solc-select use 0.8.24
+slither . --fail-high --exclude-low --exclude-informational
+
+
+---
+
+## 6) “Security & Disclosure” (коротко, обязательно)
+
+```md
+## Security & Disclosure
+
+- No private keys, mnemonics, RPC keys, or secrets in this repo.  
+- For vulnerability disclosure, contact: **security@cebucore.com** (PGP optional).  
+- See `SECURITY.md` and `SAFETY_GUARDRAILS.md` for details.
+
+## Invariants (must always hold)
+
+- Total supply constant (or defined mint/burn policy).  
+- No unauthorized minting or draining of funds.  
+- Vesting math cannot overflow/underflow and respects cliffs.  
+- Whitelist/limits (if any) enforced as specified.  
+- **Only multisig** can change critical parameters.
+docs(readme): add on-chain refs, presale plan, governance (no timelock), build/verify, quality checks, security; update invariants
+
+
+## 7) Contacts & Official links
 - Website: https://cebucore.com  
 - GitHub: https://github.com/CebuCoreProject
 
