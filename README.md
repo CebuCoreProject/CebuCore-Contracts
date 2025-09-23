@@ -1,4 +1,4 @@
-# CebuCore (CCR) — Smart Contracts (Audit-Ready Repo)
+# CebuCore (CCORE) — Smart Contracts (Audit-Ready Repo)
 
 **Status:** public, audit-ready skeleton (no secrets).  
 **Network:** BNB Smart Chain (BSC) Mainnet.  
@@ -17,7 +17,7 @@
 
 ## 2) Public on-chain references (new token)
 **Core**
-- **CCR Token (BEP-20)** — `0x7576AC3010f4d41b73a03220CDa0e5e040F64c8a`
+- **CCORE Token (BEP-20)** — `0x7576AC3010f4d41b73a03220CDa0e5e040F64c8a`
 
 **Distribution / Vesting (new, ownerless)**
 - **ClaimDistributor (Presale & Airdrop, 20% TGE + 8×10% / 15d)** — **TBD** (new address after deploy)
@@ -43,12 +43,12 @@
 - **Duration:** 10 days  
 - **Min buy:** 0.02 BNB  
 - **Max buy:** 20 BNB  
-- **Initial rate:** 1000000 CCR per 1 BNB  
+- **Initial rate:** 1000000 CCORE per 1 BNB  
 
 **Vesting (ClaimDistributor):**  
 - **Schedule:** **20% at TGE**, then **8 unlocks × 10% every 15 days** (total 100%).  
 - **Distributor (new):** **TBD** (address after deploy).  
-- **Tranches:** Presale — **500,000,000 CCR**, Airdrop — **500,000,000 CCR**.
+- **Tranches:** Presale — **500,000,000 CCORE**, Airdrop — **500,000,000 CCORE**.
 
 ---
 
