@@ -1,12 +1,19 @@
-
 [profile.default]
 src = 'contracts'
 out = 'out'
 libs = ['lib']
-solc_version = '0.8.26'        # <-- set this to EXACT version used in production
+
+# EXACT compiler version used in production
+solc_version = '0.8.24'
+
+# Optimizer settings (must match deploy/verification)
 optimizer = true
 optimizer_runs = 200
-evm_version = 'shanghai'        # BSC supports London/Shanghai; set to match deployed build
+
+# EVM target used at deploy (оставляем как в билде)
+evm_version = 'shanghai'
+
+# Permissions for scripts that read local files
 fs_permissions = [{ access = "read", path = "./" }]
 
 [fmt]
