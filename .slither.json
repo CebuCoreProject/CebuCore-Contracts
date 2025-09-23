@@ -2,8 +2,16 @@
   "solc_remaps": [
     "openzeppelin-contracts=lib/openzeppelin-contracts"
   ],
+  "solc_args": [
+    "--evm-version", "shanghai",
+    "--optimize",
+    "--optimize-runs", "200"
+  ],
+  "filter_paths": "lib/|node_modules/|test/|scripts/|script/|Legacy/",
   "checklist": true,
+  "disable_color": true,
   "exclude": [
+    "informational",
     "low"
   ]
 }
