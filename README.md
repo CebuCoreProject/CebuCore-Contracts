@@ -70,12 +70,11 @@
 
 ## 6) Contacts & Official links
 - Website: https://cebucore.com  
-- Docs:   https://docs.cebucore.com  
 - GitHub: https://github.com/CebuCoreProject
 
 - X (Twitter): https://x.com/CebuCore  
 - Telegram — Announcements: https://t.me/CebuCoreNews  
-- Telegram — Support:       https://t.me/CebuCoreSupport  
+- Telegram — Support:      https://t.me/CebuCore_Chat  
 - Discord:  https://discord.gg/A2b45cGNMp  
 
 - Email (general): contact@cebucore.com  
