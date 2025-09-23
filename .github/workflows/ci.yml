@@ -1,53 +1,56 @@
-name: CI
+name: ci
+
 on:
   push:
-    branches: ["main"]
+    branches: [ main ]
   pull_request:
-    branches: ["main"]
 
 jobs:
-  build-and-test:
+  build-test-lint:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: foundry-rs/foundry-toolchain@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Foundry
+        uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: stable
-      - name: Format (auto-fix)
-        run: forge fmt
-      - name: Build
-        run: forge build
-      - name: Test
+          # Keep Foundry up to date, project pins solc in foundry.toml
+          version: nightly
+          cache: true
+
+      - name: Show versions
+        run: |
+          forge --version || true
+          solc --version || true
+
+      - name: Build (forge)
+        run: forge build --sizes
+
+      - name: Test (forge)
         run: forge test -vvv
 
-  solhint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Set up Node (for solhint)
+        uses: actions/setup-node@v4
         with:
-          node-version: "20"
-      - name: Install solhint
-        run: npm i -D solhint
-      - name: Lint Solidity (non-blocking)
-        run: npx solhint "contracts/**/*.sol" || true
+          node-version: 20
 
-  slither:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Lint (solhint)
+        run: npx --yes solhint@4.x "contracts/**/*.sol"
+
+      - name: Set up Python (for Slither)
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install Slither + solc
+
+      - name: Install solc-select + Slither
         run: |
-          pip install slither-analyzer==0.10.4 solc-select==1.0.4
-          solc-select install 0.8.26
-          solc-select use 0.8.26
-      - uses: foundry-rs/foundry-toolchain@v1
-        with:
-          version: stable
-      - name: Verify Foundry
-        run: forge --version
-      - name: Run Slither (non-blocking)
-        run: slither . || true
+          python -m pip install --upgrade pip
+          pip install solc-select==1.0.4 slither-analyzer==0.10.4
+          solc-select install 0.8.24
+          solc-select use 0.8.24
+
+      - name: Static analysis (Slither)
+        run: |
+          slither . --fail-high --exclude-low --exclude-informational
