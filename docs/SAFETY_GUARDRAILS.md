@@ -1,12 +1,7 @@
+# Safety Guardrails
 
-# Safety Guardrails — What **NOT** to push
-
-**Never commit:**
-- Private keys, mnemonics, keystore files, seed phrases
-- `.env` files with RPC or API secrets (BscScan, Alchemy, etc.)
-- Gnosis Safe exports / transaction bundles
-- Server/cloud configs, IPs, deployment scripts with real endpoints
-- Internal dashboards, logs, or user data
-
-**Prefer separate private repos** for operations (runbooks, infra, Safe workflows).  
-Public repo = **code & docs needed for audit only**.
+- No private keys, mnemonics, RPC keys, Safe exports, or cloud configs in this repo.
+- Only Solidity sources, ABIs, docs, and verification artifacts.
+- Secrets live in secure vaults (not Git).
+- Before tagging a release: verify all deployed contracts on BscScan and update `docs/addresses.md`.
+- After finishing edits, re-enable branch protection on `main`.
