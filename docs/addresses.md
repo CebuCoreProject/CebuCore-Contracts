@@ -1,16 +1,18 @@
 
 # Public On‑Chain References (BSC Mainnet)
 
-_Last updated: 2025‑09‑01_
+_Last updated: 2025‑09‑23_
 
-- **CCR Token:** `0x422f097BB0Fc9d2adEb619349dB8df6a2450bbc6`
-- **Treasury Safe (CCR):** `0xf55f608b4046E843625633FAA7371d6B3F3E50aB`
-- **Revenue Safe (BNB):** `0x03AaA55404fE9b2090696AFE6fe185C5B320EEDe`
-- **Timelock (48h):** `0x546D6fd8fA0945eDE494565158d9775f6492575E`
+CCORE Token (BEP-20): 0x7576AC3010f4d41b73a03220CDa0e5e040F64c8a
+Treasury Safe (CCORE, main): 0xA0060Fd1CC044514D4E2F7D9F4204fEc517d7aDE
+Revenue Safe (BNB): 0x03AaA55404fE9b2090696AFE6fe185C5B320EEDe
+
 
 Presale plan:
-- Duration: 30 days; min buy: 0.02 BNB; max buy: 50 BNB
-- Initial rate: 85,000 CCR per 1 BNB
-- Claim Distributor: Presale 500M, Airdrop 500M; vesting: 4×25% at TGE/+30/+60/+90
+Duration: 10 days
+Min / Max buy: 0.02 BNB / 20 BNB
+Rate: 1 BNB = 1,000,000 CCORE
+Claim Distributor pools: Presale — 500M CCORE; Airdrop — 500M CCORE
+Vesting (claims): 20% at TGE, then 10% every 15 days until 100%
 
 > If any addresses/params change, update this file in the same commit.
