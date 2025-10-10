@@ -39,7 +39,7 @@
 ## Presale Plan (summary)
 
 - **Duration:** 10 days  
-- **Min / Max buy:** 0.02 BNB / 20 BNB  
+- **Min / Max buy:** 0.05 BNB / 20 BNB  
 - **Rate:** **1 BNB = 1,000,000 CCORE**  
 - **Vesting via Claim Distributor:** **20% at TGE, then 10% every 15 days** until 100%
 
